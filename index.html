@@ -6,10 +6,9 @@
 <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
 <script type="text/javascript" src="speedtest.js"></script>
 <script type="text/javascript">
-
 function I(i) { return document.getElementById(i); }
 //INITIALIZE SPEEDTEST
-var s=new Speedtest(); //create speedtest object
+var s= new Speedtest(); //create speedtest object
 
 var meterBk=/Trident.*rv:(\d+\.\d+)/i.test(navigator.userAgent)?"#EAEAEA":"#80808040";
 var dlColor="#6060AA",
@@ -55,6 +54,35 @@ function format(d){
 
 //UI CODE
 var uiData=null;
+var ulSpeed=0.0;
+
+function showCalculationModal(){
+	$("#calcModal").modal('show');
+}
+
+function calculateUploadTime(size){
+	//ulSpeed is in Mbps
+	//filesize is in MBs
+	var $this = $(size);
+  	var fileSize = $this.val();
+	var divisionFactor = ulSpeed / 8;
+	var secondsTaken = fileSize / divisionFactor;
+
+	var hours = secondsTaken / 3600;
+	var minutes = (hours - Math.floor(hours)) * 60;
+	var seconds = (minutes - Math.floor(minutes)) * 60;
+
+	var main_prompt = "Time Taken: ";
+	var prompt_hour = " Hour(s) ";
+	var prompt_minute = " minute(s) ";
+	var prompt_second = " second(s)";
+
+	var finalPrompt = main_prompt.concat(Math.floor(hours).toString(), prompt_hour, Math.floor(minutes).toString(), 
+	prompt_minute, Math.floor(seconds).toString(), prompt_second);
+
+	I("prompt-timeTaken").textContent = finalPrompt;
+}
+
 function startStop(){
     if(s.getState()==3){
 		//speedtest is running, abort
@@ -71,6 +99,16 @@ function startStop(){
 		s.onend=function(aborted){
             I("startStopBtn").className="";
             updateUI(true);
+			console.log("Stopped");
+
+			if (aborted) {
+				console.log("[Debug] Test aborted!");
+				ulSpeed = 0.0;
+			}
+			else {
+				console.log("[Debug] Test completed!");
+				showCalculationModal();
+			}
 		};
 		s.start();
 	}
@@ -84,6 +122,7 @@ function updateUI(forced){
 	I("dlText").textContent=(status==1&&uiData.dlStatus==0)?"...":format(uiData.dlStatus);
 	drawMeter(I("dlMeter"),mbpsToAmount(Number(uiData.dlStatus*(status==1?oscillate():1))),meterBk,dlColor,Number(uiData.dlProgress),progColor);
 	I("ulText").textContent=(status==3&&uiData.ulStatus==0)?"...":format(uiData.ulStatus);
+	ulSpeed = format(uiData.ulStatus);
 	drawMeter(I("ulMeter"),mbpsToAmount(Number(uiData.ulStatus*(status==3?oscillate():1))),meterBk,ulColor,Number(uiData.ulProgress),progColor);
 	I("pingText").textContent=format(uiData.pingStatus);
 	I("jitText").textContent=format(uiData.jitterStatus);
@@ -110,12 +149,59 @@ function initUI(){
 }
 </script>
 
+<!---    Content File Starts Here    -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="/styles/main_style.css">
-<title>BoostForDaz - Speedtest</title>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script>
+	$(document).ready(function(){
+		$("#infoModal").modal('show');
+	});
+</script>
+<title>B4D - Speedtest</title>
 </head>
 <body>
+<nav class="navbar navbar-expand-lg navbar-light bg-info">
+	<img src="assets/b4d-logo-main.png" height="100vh">
+	<!--<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+	  <span class="navbar-toggler-icon"></span>
+	</button>  -->
+</nav>
+<div id="infoModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Boost4Daz Speedtest - Instructions</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+				<!--- Instructions, updates will go here!-->
+            </div>
+        </div>
+    </div>
+</div>
 
-<h1>Boost4Daz - Speedtest</h1>
+<div id="calcModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Boost4Daz Speedtest - Calculate Upload Time</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body">
+				<p id="prompt-timeTaken"></p>
+				<form>
+                    <div class="form-group">
+                        <input id="txtbox-fileSize" type="text" class="form-control" placeholder="File Size (In MBs)">
+                    </div>
+                    <button type="submit" class="btn btn-primary" onclick="calculateUploadTime('#txtbox-fileSize')">Calculate</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div id="testWrapper">
 	<div id="test">
         <div class="testGroup">

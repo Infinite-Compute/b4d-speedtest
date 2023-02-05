@@ -318,12 +318,14 @@ Speedtest.prototype = {
    * At the end of the test, the onend(aborted) function will be called with a boolean telling you if the test was aborted or if it ended normally.
    */
   start: function() {
+    console.log("[DEBUG] Inside start function.")
     if (this._state == 3) throw "Test already running";
     this.worker = new Worker("speedtest_worker.js?r=" + Math.random());
     this.worker.onmessage = function(e) {
       if (e.data === this._prevData) return;
       else this._prevData = e.data;
       var data = JSON.parse(e.data);
+      //debugger
       try {
         if (this.onupdate) this.onupdate(data);
       } catch (e) {
