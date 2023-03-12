@@ -5,39 +5,32 @@ html,body{
 }
 body{
     text-align:center;
-    font-family:"Roboto",sans-serif;
+}
+.meter{
+    margin: 2vh 0vh 0vh 0vh;
 }
 h1{
     color:#404040;
 }
-#startStopBtn{
-    display:inline-block;
-    margin:0 auto;
-    color:#6060AA;
-    background-color:rgba(0,0,0,0);
-    border:0.15em solid #6060FF;
-    border-radius:0.3em;
-    transition:all 0.3s;
-    box-sizing:border-box;
-    width:8em; height:3em;
-    line-height:2.7em;
-    cursor:pointer;
-    box-shadow: 0 0 0 rgba(0,0,0,0.1), inset 0 0 0 rgba(0,0,0,0.1);
+#startBtn{
+    width:18em; height:3em;
+    color: #FFFFFF;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin: -10vh 0 0 0;
 }
-#startStopBtn:hover{
-    box-shadow: 0 0 2em rgba(0,0,0,0.1), inset 0 0 1em rgba(0,0,0,0.1);
+#stopBtn {
+    width:18em; height:3em;
+    color: #FFFFFF;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin: -10vh 0 0 0;
 }
-#startStopBtn.running{
-    background-color:#FF3030;
-    border-color:#FF6060;
-    color:#FFFFFF;
+
+.links{
+    color:gray;
+    font-size: 0.8em;
+    margin: -2vh 0 0 0;
 }
-#startStopBtn:before{
-    content:"Start";
-}
-#startStopBtn.running:before{
-    content:"Abort";
-}
+
 #test{
     margin-top:2em;
     margin-bottom:3em;
@@ -105,4 +98,88 @@ div.testGroup{
     body{
         font-size:0.8em;
     }
+}
+.modal-body-calc{
+    align-self: center;
+    height: 70vh;
+    overflow: auto;
+}
+
+#guideTable {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 50em;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10vh;
+}
+
+#guideTable th:nth-child(2) {
+    background-color: rgb(0, 231, 0);
+}
+
+#guideTable th:nth-child(3) {
+    background-color: rgb(91, 223, 230);
+}
+
+#guideTable th {
+    border: 2px solid #000000;
+    text-align: center;
+    padding: 8px;
+    width: 2em; height: 3.5em;
+    color: #FFFFFF;
+    font-size: 0.8em;
+}
+
+#guideTable td {
+    border: 2px solid #000000;
+    text-align: center;
+    padding: 8px;
+    font-size: 0.8em;
+}
+
+.div-uploadTime {
+    overflow: auto;
+    height: 25em;
+    width: 40em;
+    border-spacing: 5px 10px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5vh;
+}
+
+#calcTable{
+    font-family: arial, sans-serif;
+    width: 40em;
+    border-collapse: separate;
+    border-spacing: 15px 15px;
+}
+
+#calcTable th {
+    outline-color: #ffffff;
+    outline-style: solid;
+    text-align: center;
+    background-color: lightgray;
+    height: 5em;
+    width: 2.5em;
+    font-size: 0.7em;
+    position: sticky;
+    top: 0;
+}
+
+.calcTable-td-col1 { 
+    text-align: center;
+    background-color: rgb(237, 220, 220);
+    height: 5em;
+    font-size: 0.7em;
+}
+
+.calcTable-td-custom {
+    outline-color: #f6f0f0bd;
+    outline-style: solid;
+    outline-width: 2px;
+    text-align: center;
+    background-color: rgb(255, 255, 255);
+    height: 5em;
+    font-size: 0.7em;
 }

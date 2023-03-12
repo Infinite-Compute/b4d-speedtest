@@ -49,14 +49,13 @@ var uiData=null;
 var ulSpeed=0.0;
 
 function showCalculationModal(){
-	$("#calcModal").modal('show');
+	calculateUploadTime();
 }
 
-function calculateUploadTime(size){
+function uploadTimeMath(size) {
 	//ulSpeed is in Mbps
 	//filesize is in MBs
-	var $this = $(size);
-  	var fileSize = $this.val();
+  	var fileSize = size;
 	var divisionFactor = ulSpeed / 8;
 	var secondsTaken = fileSize / divisionFactor;
 
@@ -64,7 +63,7 @@ function calculateUploadTime(size){
 	var minutes = (hours - Math.floor(hours)) * 60;
 	var seconds = (minutes - Math.floor(minutes)) * 60;
 
-	var main_prompt = "Time Taken: ";
+	var main_prompt = "";
 	var prompt_hour = " Hour(s) ";
 	var prompt_minute = " minute(s) ";
 	var prompt_second = " second(s)";
@@ -72,38 +71,71 @@ function calculateUploadTime(size){
 	var finalPrompt = main_prompt.concat(Math.floor(hours).toString(), prompt_hour, Math.floor(minutes).toString(), 
 	prompt_minute, Math.floor(seconds).toString(), prompt_second);
 
-	I("prompt-timeTaken").textContent = finalPrompt;
+	return finalPrompt;
 }
 
-function startStop(){
-    if(s.getState()==3){
+function calculateUploadTime(){
+	var td_elems = I("calcTable").getElementsByTagName("td");
+	var tr_elems = I("calcTable").getElementsByTagName("tr");
+	var time_arr = [];
+
+	for (let i = 0; i < td_elems.length; i++) {
+		var package_size = td_elems[i].textContent;
+		var size = 0;
+
+		if (package_size.includes("GB")) {
+			size = parseInt(package_size.split(" ")[0]);
+			size = size * 1024; //convert to MBs
+		}
+		else if (package_size.includes("MB")) {
+			size = parseInt(package_size.split(" ")[0]);
+		}
+		else {
+			continue
+		}
+		console.log(size);
+		console.log(uploadTimeMath(size));
+		time_arr.push(uploadTimeMath(size));
+	}
+
+	for (let i = 1; i < tr_elems.length; i++) {
+		var new_cell = tr_elems[i].insertCell(1);
+		new_cell.innerHTML = time_arr[i - 1];
+		new_cell.className = "calcTable-td-custom";
+	}
+}
+
+function stop(){
+	if (s.getState() == 3) {
 		//speedtest is running, abort
 		s.abort();
 		data=null;
-		I("startStopBtn").className="";
+		//I("startBtn").className="";
 		initUI();
-	}else{
-		//test is not running, begin
-		I("startStopBtn").className="running";
-		s.onupdate=function(data){
-            uiData=data;
-		};
-		s.onend=function(aborted){
-            I("startStopBtn").className="";
-            updateUI(true);
-			console.log("Stopped");
-
-			if (aborted) {
-				console.log("[Debug] Test aborted!");
-				ulSpeed = 0.0;
-			}
-			else {
-				console.log("[Debug] Test completed!");
-				showCalculationModal();
-			}
-		};
-		s.start();
 	}
+}
+
+function start(){
+	I("stopBtn").removeAttribute("hidden");
+	s.onupdate=function(data){
+		uiData=data;
+	};
+	s.onend=function(aborted){
+	   // I("startBtn").className="";
+		updateUI(true);
+		console.log("Stopped");
+
+		if (aborted) {
+			console.log("[Debug] Test aborted!");
+			ulSpeed = 0.0;
+		}
+		else {
+			console.log("[Debug] Test completed!");
+			showCalculationModal();
+		}
+	};
+	s.start();
+
 }
 //this function reads the data sent back by the test and updates the UI
 function updateUI(forced){
@@ -116,8 +148,8 @@ function updateUI(forced){
 	I("ulText").textContent=(status==3&&uiData.ulStatus==0)?"...":format(uiData.ulStatus);
 	ulSpeed = format(uiData.ulStatus);
 	drawMeter(I("ulMeter"),mbpsToAmount(Number(uiData.ulStatus*(status==3?oscillate():1))),meterBk,ulColor,Number(uiData.ulProgress),progColor);
-	I("pingText").textContent=format(uiData.pingStatus);
-	I("jitText").textContent=format(uiData.jitterStatus);
+	//I("pingText").textContent=format(uiData.pingStatus);
+	//I("jitText").textContent=format(uiData.jitterStatus);
 }
 function oscillate(){
 	return 1+0.02*Math.sin(Date.now()/100);
@@ -135,7 +167,8 @@ function initUI(){
 	drawMeter(I("ulMeter"),0,meterBk,ulColor,0);
 	I("dlText").textContent="";
 	I("ulText").textContent="";
-	I("pingText").textContent="";
-	I("jitText").textContent="";
+	//I("pingText").textContent="";
+	//I("jitText").textContent="";
 	I("ip").textContent="";
+	I("stopBtn").setAttribute("hidden", "hidden");
 }

@@ -21,7 +21,7 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-info">
-	<img src="assets/b4d-logo-main.png" height="100vh">
+	<img src="assets/b4d-logo-main.png" height="80vh">
 	<!--<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 	  <span class="navbar-toggler-icon"></span>
 	</button>  -->
@@ -40,30 +40,10 @@
     </div>
 </div>
 
-<div id="calcModal" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Boost4Daz Speedtest - Calculate Upload Time</h5>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body">
-				<p id="prompt-timeTaken"></p>
-				<form>
-                    <div class="form-group">
-                        <input id="txtbox-fileSize" type="text" class="form-control" placeholder="File Size (In MBs)">
-                    </div>
-                    <button type="submit" class="btn btn-primary" onclick="calculateUploadTime('#txtbox-fileSize')">Calculate</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
 <div id="testWrapper">
 	<div id="test">
         <div class="testGroup">
-			<div class="testArea2">
+			<!--<div class="testArea2">
 				<div class="testName">Ping</div>
 				<div id="pingText" class="meterText" style="color:#AA6060"></div>
 				<div class="unit">ms</div>
@@ -72,17 +52,17 @@
 				<div class="testName">Jitter</div>
 				<div id="jitText" class="meterText" style="color:#AA6060"></div>
 				<div class="unit">ms</div>
-			</div>
+			</div>-->
 		</div>
 		<div class="testGroup">
 			<div class="testArea">
-				<div class="testName">Download</div>
+				<div class="testName"><b>Download</b></div>
 				<canvas id="dlMeter" class="meter"></canvas>
 				<div id="dlText" class="meterText"></div>
 				<div class="unit">Mbps</div>
 			</div>
 			<div class="testArea">
-				<div class="testName">Upload</div>
+				<div class="testName"><b>Upload</b></div>
 				<canvas id="ulMeter" class="meter"></canvas>
 				<div id="ulText" class="meterText"></div>
 				<div class="unit">Mbps</div>
@@ -92,7 +72,77 @@
 			<span id="ip"></span>
 		</div>
 	</div>
-	<div id="startStopBtn" onclick="startStop()"></div>
+	<button type="button" id="startBtn" class="btn btn-outline-primary rounded-pill bg-info" onclick="start()">CHECK MY CONNECTION SPEED</button>
+	<button type="button" id="stopBtn" class="btn btn-outline-primary rounded-pill bg-danger" onclick="stop()" hidden="hidden">CANCEL</button>
+	<div class="links">
+		<a href="localhost:8000" class="links"><u>These upload speeds are not fixed and can vary. Learn more</u></a>
+	</div>
+
+	<div>
+		<table id="guideTable">
+			<tr>
+				<th class="bg-success">60 Mbps to 100 Mbps</th>
+				<th>15 Mbps to 60 Mbps</th>
+				<th>5 Mbps to 15 Mbps</th>
+				<th class="bg-danger">less than 5 Mbps</th>
+			</tr>
+			<tr>
+				<td>Great experience. Best use of time and money.</td>
+				<td>Good experience.</td>
+				<td>It works. OK for occasional use.</td>
+				<td>Sub-optimal experience. Don't recommend using Boost for Daz until you change locations, or upgrade your internet to a higher upload speed tier.</td>
+			</tr>
+		</table>
+	</div>
+
+	<div class="div-uploadTime">
+		<table id="calcTable">
+			<tr>
+				<th>Render Package Size</th>
+				<th>Approx. Upload Time</th>
+				<th>Approx. Cost for CPU Upload</th>
+			</tr>
+			<tr>
+				<td class="calcTable-td-col1"><b>50 MB</b></td>
+			</tr>
+			<tr>
+				<td class="calcTable-td-col1"><b>100 MB</b></td>
+			</tr>
+			<tr>
+				<td class="calcTable-td-col1"><b>500 MB</b></td>
+			</tr>
+			<tr>
+				<td class="calcTable-td-col1"><b>1 GB</b></td>
+			</tr>
+			<tr>
+				<td class="calcTable-td-col1"><b>2 GB</b></td>
+			</tr>
+			<tr>
+				<td class="calcTable-td-col1"><b>5 GB</b></td>
+			</tr>
+			<tr>
+				<td class="calcTable-td-col1"><b>10 GB</b></td>
+			</tr>
+			<tr>
+				<td class="calcTable-td-col1"><b>15 GB</b></td>
+			</tr>
+			<tr>
+				<td class="calcTable-td-col1"><b>20 GB</b></td>
+			</tr>
+			<tr>
+				<td class="calcTable-td-col1"><b>30 GB</b></td>
+			</tr>
+			<tr>
+				<td class="calcTable-td-col1"><b>40 GB</b></td>
+			</tr>
+		</table>
+	</div>
+
+	<div>
+		&nbsp
+		&nbsp
+		&nbsp
+	</div>
 </div>
 <script type="text/javascript">setTimeout(function(){initUI()},100);</script>
 </body>
