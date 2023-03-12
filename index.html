@@ -26,7 +26,7 @@
 	  <span class="navbar-toggler-icon"></span>
 	</button>  -->
 </nav>
-<div id="infoModal" class="modal fade">
+<!--<div id="infoModal" class="modal fade">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -34,11 +34,10 @@
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
             <div class="modal-body">
-				<!--- Instructions, updates will go here!-->
             </div>
         </div>
     </div>
-</div>
+</div>-->
 
 <div id="testWrapper">
 	<div id="test">
@@ -78,7 +77,8 @@
 		<a href="localhost:8000" class="links"><u>These upload speeds are not fixed and can vary. Learn more</u></a>
 	</div>
 
-	<div>
+	<div id="guideTable-div" hidden="hidden">
+		<p style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; font-size: 1.5vw;">Is my upload speed enough? If your upload speeds through this connection are between:</p>
 		<table id="guideTable">
 			<tr>
 				<th class="bg-success">60 Mbps to 100 Mbps</th>
@@ -94,13 +94,15 @@
 			</tr>
 		</table>
 	</div>
-
-	<div class="div-uploadTime">
+	
+	<div><p id="calcTable-marker" hidden="hidden" style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; font-size: 1.5vw; margin-top: 5vh;">Approximate upload times through this connection:</p></div>
+	
+	<div id="div-uploadTime" hidden="hidden">
 		<table id="calcTable">
 			<tr>
 				<th>Render Package Size</th>
 				<th>Approx. Upload Time</th>
-				<th>Approx. Cost for CPU Upload</th>
+				<th>Approx. Cost for CPU Upload ($)</th>
 			</tr>
 			<tr>
 				<td class="calcTable-td-col1"><b>50 MB</b></td>

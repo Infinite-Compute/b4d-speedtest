@@ -105,13 +105,16 @@ div.testGroup{
     overflow: auto;
 }
 
+#guideTable-div {
+    margin-top: 5vh;
+}
+
 #guideTable {
     font-family: arial, sans-serif;
     border-collapse: collapse;
     width: 50em;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 10vh;
 }
 
 #guideTable th:nth-child(2) {
@@ -138,14 +141,13 @@ div.testGroup{
     font-size: 0.8em;
 }
 
-.div-uploadTime {
+#div-uploadTime {
     overflow: auto;
     height: 25em;
     width: 40em;
     border-spacing: 5px 10px;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 5vh;
 }
 
 #calcTable{

@@ -48,8 +48,15 @@ function format(d){
 var uiData=null;
 var ulSpeed=0.0;
 
+function showTables() {
+	I("guideTable-div").removeAttribute("hidden");
+	I("calcTable-marker").removeAttribute("hidden");
+	I("div-uploadTime").removeAttribute("hidden");
+}
+
 function showCalculationModal(){
 	calculateUploadTime();
+	showTables();
 }
 
 function uploadTimeMath(size) {
@@ -63,6 +70,8 @@ function uploadTimeMath(size) {
 	var minutes = (hours - Math.floor(hours)) * 60;
 	var seconds = (minutes - Math.floor(minutes)) * 60;
 
+	var uploadCost = hours * 0.27;
+	
 	var main_prompt = "";
 	var prompt_hour = " Hour(s) ";
 	var prompt_minute = " minute(s) ";
@@ -71,13 +80,14 @@ function uploadTimeMath(size) {
 	var finalPrompt = main_prompt.concat(Math.floor(hours).toString(), prompt_hour, Math.floor(minutes).toString(), 
 	prompt_minute, Math.floor(seconds).toString(), prompt_second);
 
-	return finalPrompt;
+	return [finalPrompt, uploadCost];
 }
 
 function calculateUploadTime(){
 	var td_elems = I("calcTable").getElementsByTagName("td");
 	var tr_elems = I("calcTable").getElementsByTagName("tr");
 	var time_arr = [];
+	var cost_arr = [];
 
 	for (let i = 0; i < td_elems.length; i++) {
 		var package_size = td_elems[i].textContent;
@@ -94,14 +104,19 @@ function calculateUploadTime(){
 			continue
 		}
 		console.log(size);
-		console.log(uploadTimeMath(size));
-		time_arr.push(uploadTimeMath(size));
+		// console.log(uploadTimeMath(size));
+		const values = uploadTimeMath(size);
+		time_arr.push(values[0]);
+		cost_arr.push(values[1]);
 	}
 
 	for (let i = 1; i < tr_elems.length; i++) {
 		var new_cell = tr_elems[i].insertCell(1);
+		var new_cell_cost = tr_elems[i].insertCell(2);
 		new_cell.innerHTML = time_arr[i - 1];
+		new_cell_cost.innerHTML = cost_arr[i - 1].toFixed(4);
 		new_cell.className = "calcTable-td-custom";
+		new_cell_cost.className = "calcTable-td-custom";
 	}
 }
 
@@ -135,7 +150,6 @@ function start(){
 		}
 	};
 	s.start();
-
 }
 //this function reads the data sent back by the test and updates the UI
 function updateUI(forced){
@@ -171,4 +185,7 @@ function initUI(){
 	//I("jitText").textContent="";
 	I("ip").textContent="";
 	I("stopBtn").setAttribute("hidden", "hidden");
+	I("guideTable-div").setAttribute("hidden", "hidden");
+	I("calcTable-marker").setAttribute("hidden", "hidden");
+	I("div-uploadTime").setAttribute("hidden", "hidden");
 }
