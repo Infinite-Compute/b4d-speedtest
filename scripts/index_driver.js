@@ -48,10 +48,35 @@ function format(d){
 var uiData=null;
 var ulSpeed=0.0;
 
+function makeAndShowGuideText() {
+	var guideString_firstHalf = "Based on your upload speed of ";
+	var guideString_secondHalf = " Mbps, we believe your connection is ";
+	
+	var recommendationString;
+	var ending = " Connection speeds >60 Mbps are optimal.";
+
+	if (ulSpeed >= 60) {
+		recommendationString = "ideal for a great Boost for Daz experience." + ending;
+	}
+	else if (ulSpeed > 15 && ulSpeed < 60) {
+		recommendationString = "well-suited for a good Boost for Daz experience." + ending;
+	}
+	else if (ulSpeed > 5 && ulSpeed < 15) {
+		recommendationString = "best for occassional use only. Refer to the table below to get a rough idea of upload times and costs using this connection." + ending;
+	}
+	else {
+		recommendationString = "not recommended for an optimal Boost for Daz experience, unless you change locations or upgrade your internet to a higher upload speed tier. Refer to the table below to get a rough idea of upload times and costs using this connection." + ending;
+	}
+
+	return guideString_firstHalf + ulSpeed + guideString_secondHalf + recommendationString;
+}
+
 function showTables() {
 	I("guideTable-div").removeAttribute("hidden");
 	I("calcTable-marker").removeAttribute("hidden");
 	I("div-uploadTime").removeAttribute("hidden");
+	I("id-redirectBtn").removeAttribute("hidden");
+	I("guideText").textContent = makeAndShowGuideText();
 }
 
 function showCalculationModal(){
@@ -114,7 +139,7 @@ function calculateUploadTime(){
 		var new_cell = tr_elems[i].insertCell(1);
 		var new_cell_cost = tr_elems[i].insertCell(2);
 		new_cell.innerHTML = time_arr[i - 1];
-		new_cell_cost.innerHTML = cost_arr[i - 1].toFixed(4);
+		new_cell_cost.innerHTML = "$ " + cost_arr[i - 1].toFixed(1);
 		new_cell.className = "calcTable-td-custom";
 		new_cell_cost.className = "calcTable-td-custom";
 	}

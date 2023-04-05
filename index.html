@@ -1,58 +1,32 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no" />
-<meta charset="UTF-8" />
-<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
-<script type="text/javascript" src="scripts/speedtest.js"></script>
-<script type="text/javascript" src="scripts/index_driver.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no" />
+	<meta charset="UTF-8" />
+	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+	<script type="text/javascript" src="scripts/speedtest.js"></script>
+	<script type="text/javascript" src="scripts/index_driver.js"></script>
 
-<!---    Content File Starts Here    -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="/styles/main_style.css">
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-<script>
-	$(document).ready(function(){
-		$("#infoModal").modal('show');
-	});
-</script>
-<title>B4D - Speedtest</title>
+	<!---    Content File Starts Here    -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/styles/main_style.css">
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+	<script>
+		$(document).ready(function () {
+			$("#infoModal").modal('show');
+		});
+	</script>
+	<title>B4D - Speedtest</title>
 </head>
-<body>
-<nav class="navbar navbar-expand-lg navbar-light bg-info">
-	<img src="assets/b4d-logo-main.png" height="80vh">
-	<!--<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-	  <span class="navbar-toggler-icon"></span>
-	</button>  -->
-</nav>
-<!--<div id="infoModal" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Boost4Daz Speedtest - Instructions</h5>
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-            <div class="modal-body">
-            </div>
-        </div>
-    </div>
-</div>-->
 
-<div id="testWrapper">
-	<div id="test">
-        <div class="testGroup">
-			<!--<div class="testArea2">
-				<div class="testName">Ping</div>
-				<div id="pingText" class="meterText" style="color:#AA6060"></div>
-				<div class="unit">ms</div>
-			</div>
-			<div class="testArea2">
-				<div class="testName">Jitter</div>
-				<div id="jitText" class="meterText" style="color:#AA6060"></div>
-				<div class="unit">ms</div>
-			</div>-->
-		</div>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-light bg-info">
+		<img src="assets/b4d-logo-main.png" height="80vh">
+	</nav>
+
+	<div class="row col-lg-12 col-sm-12">
 		<div class="testGroup">
 			<div class="testArea">
 				<div class="testName"><b>Download</b></div>
@@ -67,19 +41,35 @@
 				<div class="unit">Mbps</div>
 			</div>
 		</div>
-		<div id="ipArea">
-			<span id="ip"></span>
+	</div>
+
+	<div class="row" id="ipArea">
+		<span id="ip"></span>
+	</div>
+
+	<div class="row">
+		<div class="col-lg-12 col-sm-12 btnDiv">
+			<button type="button" id="startBtn" class="btn btn-outline-primary rounded-pill bg-info" onclick="start()">
+				CHECK MY CONNECTION SPEED
+			</button>
+			<button type="button" id="stopBtn" class="btn btn-outline-primary rounded-pill bg-danger" onclick="stop()" hidden="hidden">
+				CANCEL
+			</button>
 		</div>
 	</div>
-	<button type="button" id="startBtn" class="btn btn-outline-primary rounded-pill bg-info" onclick="start()">CHECK MY CONNECTION SPEED</button>
-	<button type="button" id="stopBtn" class="btn btn-outline-primary rounded-pill bg-danger" onclick="stop()" hidden="hidden">CANCEL</button>
-	<div class="links">
-		<a href="localhost:8000" class="links"><u>These upload speeds are not fixed and can vary. Learn more</u></a>
+	<div class="row links d-flex justify-content-center align-items-center">
+		<a href="#" class="links"><u>These upload speeds are not fixed and can vary. Learn more</u></a>
 	</div>
 
 	<div id="guideTable-div" hidden="hidden">
-		<p style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; font-size: 1.5vw;">Is my upload speed enough? If your upload speeds through this connection are between:</p>
-		<table id="guideTable">
+		<!-- <p
+			style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; font-size: 1.5vw;">
+			Is my upload speed enough? If your upload speeds through this connection are between:</p> -->
+		<p id="guideText"
+			style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; font-size: 1.3vw;">
+			Default text...
+		</p>
+		<!-- <table id="guideTable">
 			<tr>
 				<th class="bg-success">60 Mbps to 100 Mbps</th>
 				<th>15 Mbps to 60 Mbps</th>
@@ -90,15 +80,18 @@
 				<td>Great experience. Best use of time and money.</td>
 				<td>Good experience.</td>
 				<td>It works. OK for occasional use.</td>
-				<td>Sub-optimal experience. Don't recommend using Boost for Daz until you change locations, or upgrade your internet to a higher upload speed tier.</td>
+				<td>Sub-optimal experience. Don't recommend using Boost for Daz until you change locations, or upgrade
+					your internet to a higher upload speed tier.</td>
 			</tr>
-		</table>
+		</table> -->
 	</div>
-	
+
 	<div>
-		<p id="calcTable-marker" hidden="hidden" style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; font-size: 1.5vw; margin-top: 5vh;">Approximate upload times through this connection:</p>
+		<p id="calcTable-marker" hidden="hidden"
+			style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; font-size: 1.5vw; margin-top: 5vh;">
+			Approximate upload time and cost through this connection:</p>
 	</div>
-	
+
 	<div id="div-uploadTime" hidden="hidden">
 		<table id="calcTable">
 			<tr>
@@ -140,23 +133,18 @@
 				<td class="calcTable-td-col1"><b>40 GB</b></td>
 			</tr>
 		</table>
+
+		<a id="id-redirectBtn" href="https://boostfordaz.infinite-compute.com/" target="_blank" rel="noopener"
+			hidden="hidden">
+			<button type="button" id="redirectBtn" class="btn btn-outline-primary rounded-pill bg-info">GO TO BOOST FOR
+				DAZ</button>
+		</a>
 	</div>
-
-	<a href="https://boostfordaz.infinite-compute.com/" target="_blank" rel="noopener">
-		<button type="button" id="redirectBtn" class="btn btn-outline-primary rounded-pill bg-info">GO TO BOOST FOR DAZ</button>
-	</a>
-
-	<!--<div>
-		<p style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; font-size: 1.5vw; margin-top: 5vh;">Frequently Asked Questions</p>
-	</div>-->
-
 
 	<div>
-		&nbsp
-		&nbsp
-		&nbsp
+		
 	</div>
-</div>
-<script type="text/javascript">setTimeout(function(){initUI()},100);</script>
+	<script type="text/javascript">setTimeout(function () { initUI() }, 100);</script>
 </body>
+
 </html>

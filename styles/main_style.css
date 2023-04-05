@@ -12,30 +12,10 @@ body{
 h1{
     color:#404040;
 }
-#startBtn{
-    width:18em; height:3em;
-    color: #FFFFFF;
-    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    margin: -10vh 0 0 0;
-}
-#stopBtn {
-    width:18em; height:3em;
-    color: #FFFFFF;
-    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    margin: -10vh 0 0 0;
-}
-
-#redirectBtn {
-    width:18em; height:3em;
-    color: #FFFFFF;
-    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    margin: 10vh 0 0 0;
-}
 
 .links{
     color:gray;
     font-size: 0.8em;
-    margin: -2vh 0 0 0;
 }
 
 #test{
@@ -100,6 +80,7 @@ div.testArea canvas{
 div.testGroup{
     display:block;
     margin: 0 auto;
+    margin-top: 5vh;
 }
 @media all and (max-width:40em){
     body{
@@ -149,7 +130,6 @@ div.testGroup{
 }
 
 #div-uploadTime {
-    overflow: auto;
     height: 25em;
     width: 40em;
     border-spacing: 5px 10px;
@@ -191,4 +171,43 @@ div.testGroup{
     background-color: rgb(255, 255, 255);
     height: 5em;
     font-size: 0.7em;
+}
+
+.btnDiv {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10vh;
+}
+
+#startBtn{
+    width:18em; height:3em;
+    color: #FFFFFF;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin: -10vh 0 0 0;
+}
+#stopBtn {
+    width:18em; height:3em;
+    color: #FFFFFF;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin: -10vh 0 0 0;
+}
+
+#redirectBtn {
+    width:18em; height:3em;
+    color: #FFFFFF;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin: 5vh 0 5vh 0;
+}
+
+#ipArea {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.div-with-centered-items {
+    display:flex;
+    justify-content: center;
+    align-items: center;
 }
